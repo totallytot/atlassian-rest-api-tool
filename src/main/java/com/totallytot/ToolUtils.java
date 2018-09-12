@@ -19,9 +19,14 @@ public class ToolUtils {
         System.out.println(text);
     }
 
-    static JiraRestClient getJiraRestClient(String instance, String username, String password) throws URISyntaxException {
+    static JiraRestClient getJiraRestClient(String jiraBaseUrl, String username, String password)  {
         final AsynchronousJiraRestClientFactory factory = new AsynchronousJiraRestClientFactory();
-        final URI jiraServerUri = new URI(instance);
+        URI jiraServerUri = null;
+        try {
+            jiraServerUri = new URI(jiraBaseUrl);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
         final BasicHttpAuthenticationHandler basicHttpAuthenticationHandler = new BasicHttpAuthenticationHandler(username, password);
         return factory.create(jiraServerUri, basicHttpAuthenticationHandler);
     }
@@ -29,7 +34,17 @@ public class ToolUtils {
     static void showHelp() {
         ToolUtils.print("-help - shows help (current message);");
         ToolUtils.print("-version - shows actual version of the tool;");
-        ToolUtils.print("[crowd] [Base URL] -cu - creates active users based on input data " + Tool.FILENAME + ". Input format: username,password,first,last,email. One user per line.");
-        ToolUtils.print("[crowd] [Base URL] -ug [Group] - updates group membership based on input data " + Tool.FILENAME + ". Input format: username. One user per line.");
+        ToolUtils.print("[crowd] [Base URL] -cu - creates active users based on input data " + Tool.FILENAME
+                + ". Input format: username,password,first,last,email. One user per line.");
+        ToolUtils.print("[crowd] [Base URL] -ug [Group] - updates group membership based on input data " + Tool.FILENAME
+                + ". Input format: username. One user per line.");
+        ToolUtils.print("[jira] [Base URL] -r - generates resolutions report. The output is xlsx file located in the" +
+                " same dir as jar file.");
+        ToolUtils.print("[jira] [Base URL] -it - generates issue types report. The output is xlsx file located in the" +
+                " same dir as jar file.");
+        ToolUtils.print("[jira] [Base URL] -cf - generates custom fields report. The output is xlsx file located in the" +
+                " same dir as jar file.");
+        ToolUtils.print("[jira] [Base URL] -ws - generates workflow statuses report. The output is xlsx file located in the" +
+                " same dir as jar file.");
     }
 }

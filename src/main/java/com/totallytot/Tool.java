@@ -1,5 +1,9 @@
 package com.totallytot;
 
+import com.totallytot.reports.CustomFieldsReport;
+import com.totallytot.reports.IssueTypesReport;
+import com.totallytot.reports.ResolutionsReport;
+import com.totallytot.reports.WorkflowStatusesReport;
 import com.totallytot.services.crowd.CrowdGroupService;
 import com.totallytot.services.crowd.CrowdUserService;
 
@@ -8,7 +12,7 @@ import java.util.Properties;
 
 public class Tool {
     private static String jiraUsername, jiraPassword, crowdApplicationUser, crowdApplicationPassword;
-    private static final String VERSION = "REST API Tool for Atlassian apps v.1.0";
+    private static final String VERSION = "REST API Tool for Atlassian apps v.1.1";
     public static final String FILENAME = "./input.csv";
     //public static final String FILENAME = "d:/input.csv";
 
@@ -22,16 +26,53 @@ public class Tool {
             String baseUrl = args[1].toLowerCase().trim();
             String key = args[2].toLowerCase().trim();
 
-            if (!baseUrl.endsWith("/")) {
-                baseUrl = baseUrl + "/";
-            }
+            if (!baseUrl.endsWith("/")) baseUrl = baseUrl + "/";
 
-            switch (application) {
+            switch (application)
+            {
                 case "crowd":
                     String basicAuth = ToolUtils.encodeCredentials(crowdApplicationUser, crowdApplicationPassword);
-                if (key.equals("-ug")) new CrowdGroupService(basicAuth, baseUrl).updateGroupMembership(args[3]);
-                else if (key.equals("-cu")) new CrowdUserService(basicAuth, baseUrl).createUsers();
+                    switch (key) {
+                        case "-ug":
+                            new CrowdGroupService(basicAuth, baseUrl).updateGroupMembership(args[3].trim());
+                            break;
+                        case "-cu":
+                            new CrowdUserService(basicAuth, baseUrl).createUsers();
+                            break;
+                        default:
+                            ToolUtils.showHelp();
+                            break;
+                    }
                     break;
+
+                case "jira":
+                    switch (key) {
+                        case "-r":
+                            ResolutionsReport r = new ResolutionsReport(ToolUtils.getJiraRestClient(baseUrl,
+                                    jiraUsername, jiraPassword));
+                            r.writeXlsxFile(r.generateReport(), "Resolutions");
+                            break;
+                        case "-it":
+                            IssueTypesReport it = new IssueTypesReport(ToolUtils.getJiraRestClient(baseUrl,
+                                    jiraUsername, jiraPassword));
+                            it.writeXlsxFile(it.generateReport(), "IssueTypes");
+                            break;
+                        case "-cf":
+                            CustomFieldsReport cf = new CustomFieldsReport(ToolUtils.getJiraRestClient(baseUrl,
+                                    jiraUsername, jiraPassword));
+                            cf.writeXlsxFile(cf.generateReport(), "CustomFields");
+                            break;
+                        case "-ws":
+                            WorkflowStatusesReport ws = new WorkflowStatusesReport(ToolUtils.getJiraRestClient(baseUrl,
+                                    jiraUsername, jiraPassword));
+                            ws.writeXlsxFile(ws.generateReport(), "WorkflowStatuses");
+                            break;
+                        default:
+                            ToolUtils.showHelp();
+                            break;
+                    }
+                    break;
+
                 default:
                     ToolUtils.showHelp();
                     break;

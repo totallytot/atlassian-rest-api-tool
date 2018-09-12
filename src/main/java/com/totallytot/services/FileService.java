@@ -1,5 +1,7 @@
 package com.totallytot.services;
 
+import org.apache.poi.ss.usermodel.Workbook;
+
 import java.io.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,5 +22,17 @@ public interface FileService {
             e.printStackTrace();
         }
         return data;
+    }
+
+    default void writeXlsxFile(Workbook workbook, String fileName) {
+        File currDir = new File(".");
+        String path = currDir.getAbsolutePath();
+        String fileLocation = path.substring(0, path.length() - 1) + fileName + ".xlsx";
+        try (FileOutputStream outputStream = new FileOutputStream(fileLocation))
+        {
+            workbook.write(outputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
