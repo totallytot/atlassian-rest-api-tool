@@ -13,8 +13,8 @@ import java.util.Properties;
 public class Tool {
     private static String jiraUsername, jiraPassword, crowdApplicationUser, crowdApplicationPassword;
     private static final String VERSION = "REST API Tool for Atlassian apps v.1.1";
-    public static final String FILENAME = "./input.csv";
-    //public static final String FILENAME = "d:/input.csv";
+    //public static final String FILENAME = "./input.csv";
+    public static final String FILENAME = "d:/tests/test data/input_ws.csv";
 
 
     public static void main(String[] args) {
