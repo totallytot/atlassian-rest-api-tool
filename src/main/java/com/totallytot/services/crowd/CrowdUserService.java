@@ -1,6 +1,5 @@
 package com.totallytot.services.crowd;
 
-import com.totallytot.Tool;
 import com.totallytot.ToolUtils;
 import com.totallytot.services.FileService;
 import com.totallytot.services.RestApiService;
@@ -11,13 +10,13 @@ public class CrowdUserService implements RestApiService, FileService {
 
     private String basicAuth, baseUrl;
 
-    public CrowdUserService(String basicAuth, String baseUrl) {
-        this.basicAuth = basicAuth;
+    public CrowdUserService(String baseUrl) {
+        this.basicAuth = ToolUtils.getCrowdBasicAuth();
         this.baseUrl = baseUrl;
     }
 
     public void createUsers() {
-        Set<String> usersData = loadDataFromFile(Tool.FILENAME);
+        Set<String> usersData = loadDataFromFile(ToolUtils.filePath);
         ToolUtils.print("Total items for processing: " + usersData.size());
         ToolUtils.print("Starting creation of users...");
 

@@ -4,6 +4,7 @@ import com.totallytot.reports.CustomFieldsReport;
 import com.totallytot.reports.IssueTypesReport;
 import com.totallytot.reports.ResolutionsReport;
 import com.totallytot.reports.WorkflowStatusesReport;
+import com.totallytot.services.JiraRestApiServiceCookieImpl;
 import com.totallytot.services.RestApiService;
 import com.totallytot.services.crowd.CrowdGroupService;
 import com.totallytot.services.crowd.CrowdUserService;
@@ -16,13 +17,13 @@ public class TestTool {
         //CrowdGroupService crowdGroupService = new CrowdGroupService(ToolUtils.encodeCredentials("crowd", "crowd"), "http://localhost:8095/crowd/");
         //crowdGroupService.updateGroupMembership("test");
 
-        String baseUrl = "http://localhost:8080/";
-        String jiraUsername = "admin";
-        String jiraPassword = "admin";
+        //String baseUrl = "http://localhost:8080/";
+        //String jiraUsername = "admin";
+        //String jiraPassword = "admin";
 
-        JiraWorkflowService jiraWorkflowService = new JiraWorkflowService(ToolUtils.encodeCredentials("crowd", "crowd"), "http://localhost:8080/");
-        jiraWorkflowService.removeWorkflowSchemes();
-        System.out.println("дратуте");
+        //JiraWorkflowService jiraWorkflowService = new JiraWorkflowService(ToolUtils.encodeCredentials("crowd", "crowd"), "http://localhost:8080/");
+        //jiraWorkflowService.removeWorkflowSchemes();
+        //System.out.println("дратуте");
         /*
         IssueTypesReport it = new IssueTypesReport(ToolUtils.getJiraRestClient(baseUrl, jiraUsername, jiraPassword));
         it.writeXlsxFile(it.generateReport(), "IssueTypes");
@@ -34,6 +35,7 @@ public class TestTool {
         ws.writeXlsxFile(ws.generateReport(), "WorkflowStatuses");
         */
 
-
+        JiraRestApiServiceCookieImpl jiraRestApiServiceCookie = new JiraRestApiServiceCookieImpl();
+        System.out.println(jiraRestApiServiceCookie.getCookie());
     }
 }

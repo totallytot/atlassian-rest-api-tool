@@ -32,12 +32,12 @@ public interface RestApiService {
     }
 
     default String sendRequestAndGetBody(String type, String restApiUrl, String basicAuth, String body) {
-
         OutputStreamWriter out = null;
         BufferedReader reader = null;
         StringBuilder stringBuilder = null;
 
-        try {
+        try
+        {
             URL url = new URL(restApiUrl);
             HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
             httpCon.setDoOutput(true);
@@ -48,15 +48,13 @@ public interface RestApiService {
             if (body != null) {
                 out = new OutputStreamWriter(httpCon.getOutputStream());
                 out.write(body);
+                out.flush();
             }
 
             reader = new BufferedReader(new InputStreamReader(httpCon.getInputStream()));
             stringBuilder = new StringBuilder();
-            String line = null;
-            while ((line = reader.readLine()) != null)
-            {
-                stringBuilder.append(line).append("\n");
-            }
+            String line;
+            while ((line = reader.readLine()) != null) stringBuilder.append(line).append("\n");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -70,6 +68,7 @@ public interface RestApiService {
                     e.printStackTrace();
             }
         }
+        assert stringBuilder != null;
         return stringBuilder.toString();
     }
 

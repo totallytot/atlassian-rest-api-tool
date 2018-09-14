@@ -17,7 +17,6 @@ public interface FileService {
             while ((idLine = reader.readLine()) != null) {
                 data.add(idLine.trim());
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }

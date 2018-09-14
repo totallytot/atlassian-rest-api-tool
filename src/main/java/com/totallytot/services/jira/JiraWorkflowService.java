@@ -1,6 +1,5 @@
 package com.totallytot.services.jira;
 
-import com.totallytot.Tool;
 import com.totallytot.ToolUtils;
 import com.totallytot.services.FileService;
 import com.totallytot.services.RestApiService;
@@ -16,7 +15,7 @@ public class JiraWorkflowService implements RestApiService, FileService {
     }
 
     public void removeWorkflowSchemes() {
-        Set<String> ids = loadDataFromFile(Tool.FILENAME);
+        Set<String> ids = loadDataFromFile(ToolUtils.filePath);
         ToolUtils.print("Total items for processing: " + ids.size());
         ToolUtils.print("Starting workflow schemes removal...");
 
