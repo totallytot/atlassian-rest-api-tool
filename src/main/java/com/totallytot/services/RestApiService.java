@@ -9,12 +9,19 @@ import java.net.URL;
 
 public interface RestApiService {
 
-    default int sendRequestAndGetStatus(String type, String restApiUrl, String basicAuth, String body) {
+    default int sendRequestAndGetStatus(String type, String restApiUrl, boolean useCookie, String authorization, String body) {
         int status = 0;
         try {
             URL url = new URL(restApiUrl);
             HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
-            httpCon.setRequestProperty("Authorization", basicAuth);
+
+            if (!useCookie) {
+                httpCon.setRequestProperty("Authorization", authorization);
+            } else {
+                httpCon.setRequestProperty("Cookie", authorization);
+                httpCon.setRequestProperty("X-Atlassian-Token", "no-check");
+            }
+
             httpCon.setRequestProperty("Content-Type", "Application/json");
             httpCon.setRequestMethod(type);
             if (body != null) {
@@ -24,7 +31,6 @@ public interface RestApiService {
                 out.close();
             }
             status = httpCon.getResponseCode();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -73,10 +79,10 @@ public interface RestApiService {
     }
 
     default int sendPostRequest(String restApiUrl, String basicAuth, String body) {
-        return sendRequestAndGetStatus("POST", restApiUrl, basicAuth, body);
+        return sendRequestAndGetStatus("POST", restApiUrl, false, basicAuth, body);
     }
 
     default int sendDeleteRequest(String restApiUrl, String basicAuth) {
-        return sendRequestAndGetStatus("DELETE", restApiUrl, basicAuth, null);
+        return sendRequestAndGetStatus("DELETE", restApiUrl, false, basicAuth, null);
     }
 }

@@ -10,9 +10,9 @@ public class CrowdGroupService implements RestApiService, FileService {
 
     private String basicAuth, baseUrl;
 
-    public CrowdGroupService(String baseUrl) {
+    public CrowdGroupService() {
         this.basicAuth = ToolUtils.getCrowdBasicAuth();
-        this.baseUrl = baseUrl;
+        this.baseUrl = ToolUtils.getBaseURL();
     }
 
     public void updateGroupMembership(String group) {

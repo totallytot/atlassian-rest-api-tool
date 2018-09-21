@@ -11,9 +11,17 @@ import java.net.URISyntaxException;
 import java.util.Properties;
 
 public class ToolUtils {
-    private static String jiraUsername, jiraPassword, crowdApplicationUser, crowdApplicationPassword;
+    private static String jiraUsername, jiraPassword, crowdApplicationUser, crowdApplicationPassword, baseURL;
     public static String filePath;
     static final String VERSION = "REST API Tool for Atlassian apps v.1.1";
+
+    public static String getBaseURL() {
+        return baseURL;
+    }
+
+    static void setBaseURL(String baseURL) {
+        ToolUtils.baseURL = baseURL;
+    }
 
     public static String getJiraUsername() {
         return jiraUsername;
@@ -23,11 +31,11 @@ public class ToolUtils {
         return jiraPassword;
     }
 
-    static JiraRestClient getJiraRestClient(String jiraBaseUrl)  {
+    public static JiraRestClient getJiraRestClient() {
         final AsynchronousJiraRestClientFactory factory = new AsynchronousJiraRestClientFactory();
         URI jiraServerUri = null;
         try {
-            jiraServerUri = new URI(jiraBaseUrl);
+            jiraServerUri = new URI(baseURL);
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }

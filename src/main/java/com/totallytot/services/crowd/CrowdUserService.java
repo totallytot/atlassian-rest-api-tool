@@ -10,9 +10,9 @@ public class CrowdUserService implements RestApiService, FileService {
 
     private String basicAuth, baseUrl;
 
-    public CrowdUserService(String baseUrl) {
+    public CrowdUserService() {
         this.basicAuth = ToolUtils.getCrowdBasicAuth();
-        this.baseUrl = baseUrl;
+        this.baseUrl = ToolUtils.getBaseURL();
     }
 
     public void createUsers() {

@@ -1,6 +1,7 @@
 package com.totallytot.reports;
 
 import com.atlassian.jira.rest.client.api.JiraRestClient;
+import com.totallytot.ToolUtils;
 import com.totallytot.services.FileService;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFFont;
@@ -12,8 +13,8 @@ public abstract class BasicReport implements FileService {
     JiraRestClient jiraRestClient;
     String firstCellName, secondCellName, thirdCellName, reportName;
 
-    public BasicReport(JiraRestClient jiraRestClient) {
-        this.jiraRestClient = jiraRestClient;
+    BasicReport() {
+        this.jiraRestClient = ToolUtils.getJiraRestClient();
         firstCellName = "ID";
         secondCellName = "Name";
         thirdCellName = null;

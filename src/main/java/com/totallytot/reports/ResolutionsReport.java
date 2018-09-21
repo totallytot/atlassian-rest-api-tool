@@ -1,6 +1,5 @@
 package com.totallytot.reports;
 
-import com.atlassian.jira.rest.client.api.JiraRestClient;
 import com.atlassian.jira.rest.client.api.domain.Resolution;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -12,8 +11,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class ResolutionsReport extends BasicReport {
 
-    public ResolutionsReport(JiraRestClient jiraRestClient) {
-        super(jiraRestClient);
+    public ResolutionsReport() {
+        super();
         reportName = "Resolutions";
     }
 

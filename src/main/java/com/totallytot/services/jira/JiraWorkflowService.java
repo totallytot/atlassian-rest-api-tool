@@ -2,27 +2,32 @@ package com.totallytot.services.jira;
 
 import com.totallytot.ToolUtils;
 import com.totallytot.services.FileService;
-import com.totallytot.services.RestApiService;
+import com.totallytot.services.JiraRestApiServiceCookieImpl;
 
 import java.util.Set;
 
-public class JiraWorkflowService implements RestApiService, FileService {
-    private String basicAuth, baseUrl;
+public class JiraWorkflowService implements FileService {
+    private String baseUrl;
+    private JiraRestApiServiceCookieImpl jiraRestApiCookie;
 
-    public JiraWorkflowService(String basicAuth, String baseUrl) {
-        this.basicAuth = basicAuth;
-        this.baseUrl = baseUrl;
+    public JiraWorkflowService() {
+        this.baseUrl = ToolUtils.getBaseURL();
+        this.jiraRestApiCookie = new JiraRestApiServiceCookieImpl();
     }
 
     public void removeWorkflowSchemes() {
         Set<String> ids = loadDataFromFile(ToolUtils.filePath);
         ToolUtils.print("Total items for processing: " + ids.size());
+        ToolUtils.print("Getting cookies...");
+        String cookie = jiraRestApiCookie.getCookie();
+        ToolUtils.print("Getting WebSudo rights...");
+        jiraRestApiCookie.activateWebSudo(cookie);
         ToolUtils.print("Starting workflow schemes removal...");
 
         ids.forEach(id -> {
             ToolUtils.print("Processing workflow scheme id: " + id);
             String jiraRestApiUrl = String.format("%srest/api/latest/workflowscheme/%s", baseUrl, id);
-            int status = sendDeleteRequest(jiraRestApiUrl, basicAuth);
+            int status = jiraRestApiCookie.sendDeleteRequest(jiraRestApiUrl, cookie);
             switch (status) {
                 case 400:
                     ToolUtils.print("Status " + status + ": requested scheme is active.");

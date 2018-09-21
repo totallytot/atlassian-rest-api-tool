@@ -1,6 +1,5 @@
 package com.totallytot.reports;
 
-import com.atlassian.jira.rest.client.api.JiraRestClient;
 import com.atlassian.jira.rest.client.api.domain.IssueType;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -12,8 +11,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class IssueTypesReport extends BasicReport {
 
-    public IssueTypesReport(JiraRestClient jiraRestClient) {
-        super(jiraRestClient);
+    public IssueTypesReport() {
+        super();
         reportName = "IssueTypes";
         thirdCellName = "Is Sub-Task?";
     }
@@ -42,7 +41,6 @@ public class IssueTypesReport extends BasicReport {
             cell.setCellValue(issueType.isSubtask());
             rowIndex.getAndIncrement();
         });
-
         return workbook;
     }
 }
