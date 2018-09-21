@@ -90,5 +90,7 @@ public class ToolUtils {
                 " same dir as jar file.");
         ToolUtils.print("[jira] [Base URL] -ws - generates workflow statuses report. The output is xlsx file located in the" +
                 " same dir as jar file.");
+        ToolUtils.print("[jira] [Base URL] -rw - removes workflow schemes based on input data " + filePath
+                + ". Input format: Workflow scheme ids. One id per line.");
     }
 }

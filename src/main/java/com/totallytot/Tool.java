@@ -6,6 +6,7 @@ import com.totallytot.reports.ResolutionsReport;
 import com.totallytot.reports.WorkflowStatusesReport;
 import com.totallytot.services.crowd.CrowdGroupService;
 import com.totallytot.services.crowd.CrowdUserService;
+import com.totallytot.services.jira.JiraWorkflowService;
 
 public class Tool {
     public static void main(String[] args) {
@@ -52,6 +53,10 @@ public class Tool {
                         case "-ws":
                             WorkflowStatusesReport ws = new WorkflowStatusesReport();
                             ws.writeXlsxFile(ws.generateReport(), "WorkflowStatuses");
+                            break;
+                        case "-rw":
+                            JiraWorkflowService jiraWorkflowService = new JiraWorkflowService();
+                            jiraWorkflowService.removeWorkflowSchemes();
                             break;
                         default:
                             ToolUtils.showHelp();
