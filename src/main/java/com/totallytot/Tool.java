@@ -54,7 +54,7 @@ public class Tool {
                             WorkflowStatusesReport ws = new WorkflowStatusesReport();
                             ws.writeXlsxFile(ws.generateReport(), "WorkflowStatuses");
                             break;
-                        case "-rw":
+                        case "-rws":
                             JiraWorkflowService jiraWorkflowService = new JiraWorkflowService();
                             jiraWorkflowService.removeWorkflowSchemes();
                             break;

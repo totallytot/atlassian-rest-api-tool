@@ -13,7 +13,7 @@ import java.util.Properties;
 public class ToolUtils {
     private static String jiraUsername, jiraPassword, crowdApplicationUser, crowdApplicationPassword, baseURL;
     public static String filePath;
-    static final String VERSION = "REST API Tool for Atlassian apps v.1.1";
+    static final String VERSION = "REST API Tool for Atlassian apps v.1.2";
 
     public static String getBaseURL() {
         return baseURL;
@@ -76,21 +76,16 @@ public class ToolUtils {
     }
 
     static void showHelp() {
-        ToolUtils.print("-help - shows help (current message);");
-        ToolUtils.print("-version - shows actual version of the tool;");
-        ToolUtils.print("[crowd] [Base URL] -cu - creates active users based on input data " + filePath
-                + ". Input format: username,password,first,last,email. One user per line.");
-        ToolUtils.print("[crowd] [Base URL] -ug [Group] - updates group membership based on input data " + filePath
-                + ". Input format: username. One user per line.");
-        ToolUtils.print("[jira] [Base URL] -r - generates resolutions report. The output is xlsx file located in the" +
-                " same dir as jar file.");
-        ToolUtils.print("[jira] [Base URL] -it - generates issue types report. The output is xlsx file located in the" +
-                " same dir as jar file.");
-        ToolUtils.print("[jira] [Base URL] -cf - generates custom fields report. The output is xlsx file located in the" +
-                " same dir as jar file.");
-        ToolUtils.print("[jira] [Base URL] -ws - generates workflow statuses report. The output is xlsx file located in the" +
-                " same dir as jar file.");
-        ToolUtils.print("[jira] [Base URL] -rw - removes workflow schemes based on input data " + filePath
-                + ". Input format: Workflow scheme ids. One id per line.");
+        ToolUtils.print("Example of usage: java -jar atlassian-rest-api-tool.jar jira http://localhost:8080 -it");
+        ToolUtils.print("Available commands: ");
+        ToolUtils.print("   -help - shows help (current message);");
+        ToolUtils.print("   -version - shows actual version of the tool;");
+        ToolUtils.print("   crowd [Base URL] -cu - creates active users based on input data. Input format: username,password,first,last,email. One user per line.");
+        ToolUtils.print("   crowd [Base URL] -ug [Group] - updates group membership based on input data. Input format: username. One user per line.");
+        ToolUtils.print("   jira [Base URL] -r - generates resolutions report. The output is xlsx file located in the same dir as jar file.");
+        ToolUtils.print("   jira [Base URL] -it - generates issue types report. The output is xlsx file located in the same dir as jar file.");
+        ToolUtils.print("   jira [Base URL] -cf - generates custom fields report. The output is xlsx file located in the  same dir as jar file.");
+        ToolUtils.print("   jira [Base URL] -ws - generates workflow statuses report. The output is xlsx file located in the same dir as jar file.");
+        ToolUtils.print("   jira [Base URL] -rws - removes workflow schemes based on input data. Input format: Workflow scheme ids. One id per line.");
     }
 }
