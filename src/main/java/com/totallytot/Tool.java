@@ -7,6 +7,7 @@ import com.totallytot.reports.WorkflowStatusesReport;
 import com.totallytot.services.crowd.CrowdGroupService;
 import com.totallytot.services.crowd.CrowdUserService;
 import com.totallytot.services.jira.JiraWorkflowService;
+import com.totallytot.services.jiracloud.JiraIssueService;
 
 public class Tool {
     public static void main(String[] args) {
@@ -63,9 +64,14 @@ public class Tool {
                             break;
                     }
                     break;
-                default:
-                    ToolUtils.showHelp();
-                    break;
+                case "jirac":
+                    switch (key) {
+                        case "-uv":
+                            String id = args[3].trim();
+                            JiraIssueService jiraIssueService = new JiraIssueService();
+                            jiraIssueService.updateVersionPickerCF(id);
+                            break;
+                    }
             }
         }
     }

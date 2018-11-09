@@ -11,15 +11,16 @@ import java.net.URISyntaxException;
 import java.util.Properties;
 
 public class ToolUtils {
-    private static String jiraUsername, jiraPassword, crowdApplicationUser, crowdApplicationPassword, baseURL;
+    private static String jiraUsername, jiraPassword, jiraCloudUsername, jiraCloudPassword,
+            crowdApplicationUser, crowdApplicationPassword, baseURL;
     public static String filePath;
-    static final String VERSION = "REST API Tool for Atlassian apps v.1.2";
+    static final String VERSION = "REST API Tool for Atlassian apps v.1.2.1";
 
     public static String getBaseURL() {
         return baseURL;
     }
 
-    static void setBaseURL(String baseURL) {
+    public static void setBaseURL(String baseURL) {
         ToolUtils.baseURL = baseURL;
     }
 
@@ -51,6 +52,10 @@ public class ToolUtils {
         return encodeCredentials(crowdApplicationUser, crowdApplicationPassword);
     }
 
+    public static String getJiraCloudBasicAuth() {
+        return encodeCredentials(jiraCloudUsername, jiraCloudPassword);
+    }
+
     private static String encodeCredentials(String username, String password) {
         byte[] credentials = (username + ':' + password).getBytes();
         return "Basic " + new String(Base64.encodeBase64(credentials));
@@ -60,7 +65,7 @@ public class ToolUtils {
         System.out.println(text);
     }
 
-    static void loadProperties() {
+    public static void loadProperties() {
         Properties prop = new Properties();
         try {
             prop.load(Tool.class.getClassLoader().getResourceAsStream("config.properties"));
@@ -72,6 +77,8 @@ public class ToolUtils {
         jiraPassword = prop.getProperty("jira.password");
         crowdApplicationUser = prop.getProperty("crowd.application.user");
         crowdApplicationPassword = prop.getProperty("crowd.application.password");
+        jiraCloudUsername = prop.getProperty("jiracloud.username");
+        jiraCloudPassword = prop.getProperty("jiracloud.password");
         filePath = prop.getProperty("input.file.location");
     }
 
@@ -87,5 +94,6 @@ public class ToolUtils {
         ToolUtils.print("   jira [Base URL] -cf - generates custom fields report. The output is xlsx file located in the  same dir as jar file.");
         ToolUtils.print("   jira [Base URL] -ws - generates workflow statuses report. The output is xlsx file located in the same dir as jar file.");
         ToolUtils.print("   jira [Base URL] -rws - removes workflow schemes based on input data. Input format: Workflow scheme ids. One id per line.");
+        ToolUtils.print("   jirac [Base URL] -uv id - updates version picker field based on input data. Input format: issuekey,value1,value2. One issue key per line.");
     }
 }

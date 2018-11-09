@@ -19,7 +19,7 @@ public class JiraRestApiServiceCookieImpl implements RestApiService{
     public String getCookie() {
         String requestBody = String.format("{ \"username\": \"%s\", \"password\": \"%s\" }", ToolUtils.getJiraUsername(),
                 ToolUtils.getJiraPassword());
-        String JsonResponseBody = sendRequestAndGetBody("POST", baseUrl + "rest/auth/1/session",
+        String JsonResponseBody = sendRequestAndGetBody(RequestType.POST, baseUrl + "rest/auth/1/session",
                 ToolUtils.getJiraBasicAuth(), requestBody);
         /*
           {"session":{"name":"JSESSIONID","value":"5507ED57E446AE096FB98EDA810D99FC"},
@@ -63,6 +63,6 @@ public class JiraRestApiServiceCookieImpl implements RestApiService{
 
     @Override
     public int sendDeleteRequest(String restApiUrl, String cookie) {
-        return  sendRequestAndGetStatus("DELETE", restApiUrl, true, cookie, null);
+        return  sendRequestAndGetStatus(RequestType.DELETE, restApiUrl, true, cookie, null);
     }
 }

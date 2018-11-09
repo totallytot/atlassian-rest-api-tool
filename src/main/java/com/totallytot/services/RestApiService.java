@@ -9,7 +9,7 @@ import java.net.URL;
 
 public interface RestApiService {
 
-    default int sendRequestAndGetStatus(String type, String restApiUrl, boolean useCookie, String authorization, String body) {
+    default int sendRequestAndGetStatus(RequestType requestType, String restApiUrl, boolean useCookie, String authorization, String body) {
         int status = 0;
         try {
             URL url = new URL(restApiUrl);
@@ -23,7 +23,7 @@ public interface RestApiService {
             }
 
             httpCon.setRequestProperty("Content-Type", "Application/json");
-            httpCon.setRequestMethod(type);
+            httpCon.setRequestMethod(requestType.toString());
             if (body != null) {
                 httpCon.setDoOutput(true);
                 OutputStreamWriter out = new OutputStreamWriter(httpCon.getOutputStream());
@@ -37,11 +37,10 @@ public interface RestApiService {
         return status;
     }
 
-    default String sendRequestAndGetBody(String type, String restApiUrl, String basicAuth, String body) {
+    default String sendRequestAndGetBody(RequestType requestType, String restApiUrl, String basicAuth, String body) {
         OutputStreamWriter out = null;
         BufferedReader reader = null;
         StringBuilder stringBuilder = null;
-
         try
         {
             URL url = new URL(restApiUrl);
@@ -49,7 +48,7 @@ public interface RestApiService {
             httpCon.setDoOutput(true);
             httpCon.setRequestProperty("Authorization", basicAuth);
             httpCon.setRequestProperty("Content-Type", "Application/json");
-            httpCon.setRequestMethod(type);
+            httpCon.setRequestMethod(requestType.toString());
 
             if (body != null) {
                 out = new OutputStreamWriter(httpCon.getOutputStream());
@@ -79,10 +78,10 @@ public interface RestApiService {
     }
 
     default int sendPostRequest(String restApiUrl, String basicAuth, String body) {
-        return sendRequestAndGetStatus("POST", restApiUrl, false, basicAuth, body);
+        return sendRequestAndGetStatus(RequestType.POST, restApiUrl, false, basicAuth, body);
     }
 
     default int sendDeleteRequest(String restApiUrl, String basicAuth) {
-        return sendRequestAndGetStatus("DELETE", restApiUrl, false, basicAuth, null);
+        return sendRequestAndGetStatus(RequestType.DELETE, restApiUrl, false, basicAuth, null);
     }
 }
