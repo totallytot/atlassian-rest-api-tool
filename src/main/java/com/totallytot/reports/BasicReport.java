@@ -1,6 +1,7 @@
 package com.totallytot.reports;
 
 import com.atlassian.jira.rest.client.api.JiraRestClient;
+import com.totallytot.Authenticator;
 import com.totallytot.ToolUtils;
 import com.totallytot.services.FileService;
 import org.apache.poi.ss.usermodel.*;
@@ -14,7 +15,7 @@ public abstract class BasicReport implements FileService {
     String firstCellName, secondCellName, thirdCellName, reportName;
 
     BasicReport() {
-        this.jiraRestClient = ToolUtils.getJiraRestClient();
+        this.jiraRestClient = Authenticator.getJiraRestClient();
         firstCellName = "ID";
         secondCellName = "Name";
         thirdCellName = null;

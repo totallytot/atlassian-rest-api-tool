@@ -1,5 +1,6 @@
 package com.totallytot.services.crowd;
 
+import com.totallytot.Authenticator;
 import com.totallytot.ToolUtils;
 import com.totallytot.services.FileService;
 import com.totallytot.services.RestApiService;
@@ -11,8 +12,8 @@ public class CrowdUserService implements RestApiService, FileService {
     private String basicAuth, baseUrl;
 
     public CrowdUserService() {
-        this.basicAuth = ToolUtils.getCrowdBasicAuth();
-        this.baseUrl = ToolUtils.getBaseURL();
+        this.basicAuth = Authenticator.getCrowdBasicAuth();
+        this.baseUrl = Authenticator.getBaseURL();
     }
 
     public void createUsers() {

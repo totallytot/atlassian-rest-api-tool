@@ -3,6 +3,7 @@ package com.totallytot.services.jiracloud;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.totallytot.Authenticator;
 import com.totallytot.ToolUtils;
 import com.totallytot.services.FileService;
 import com.totallytot.services.RestApiService;
@@ -17,7 +18,7 @@ public class JiraIssueService implements RestApiService, FileService {
     private RestApiServiceUnirestImpl restApiServiceUnirest;
 
     public JiraIssueService() {
-        this.baseUrl = ToolUtils.getBaseURL();
+        this.baseUrl = Authenticator.getBaseURL();
         this.restApiServiceUnirest = new RestApiServiceUnirestImpl();
     }
 
@@ -42,7 +43,7 @@ public class JiraIssueService implements RestApiService, FileService {
                 values.forEach(value -> customfield.addObject().put("name", value));
             }
             int status = restApiServiceUnirest.sendPutRequestAndGetStatus(restApiUrl,
-                    ToolUtils.getJiraCloudBasicAuth(), root);
+                    Authenticator.getJiraCloudBasicAuth(), root);
             switch (status) {
                 case 204:
                     ToolUtils.print("Status " + status + ": the issue was updated successfully.");

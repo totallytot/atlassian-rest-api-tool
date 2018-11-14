@@ -1,5 +1,6 @@
 package com.totallytot.services.jira;
 
+import com.totallytot.Authenticator;
 import com.totallytot.ToolUtils;
 import com.totallytot.services.FileService;
 import com.totallytot.services.JiraRestApiServiceCookieImpl;
@@ -11,7 +12,7 @@ public class JiraWorkflowService implements FileService {
     private JiraRestApiServiceCookieImpl jiraRestApiCookie;
 
     public JiraWorkflowService() {
-        this.baseUrl = ToolUtils.getBaseURL();
+        this.baseUrl = Authenticator.getBaseURL();
         this.jiraRestApiCookie = new JiraRestApiServiceCookieImpl();
     }
 

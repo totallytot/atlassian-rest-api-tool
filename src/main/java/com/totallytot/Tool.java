@@ -19,7 +19,7 @@ public class Tool {
             //set base url in util tools as all classes will use it from tool utils
             String baseUrl = args[1].toLowerCase().trim();
             if (!baseUrl.endsWith("/")) baseUrl = baseUrl + "/";
-            ToolUtils.setBaseURL(baseUrl);
+            Authenticator.setBaseURL(baseUrl);
 
             String key = args[2].toLowerCase().trim();
 
